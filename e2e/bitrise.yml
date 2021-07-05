@@ -1,0 +1,20 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+
+workflows:
+  test_udid:
+    steps:
+    - path::./:
+        title: Test Step
+        inputs:
+        - simulator_device: iPhone 8
+        - simulator_os_version: "14.5"
+    - script:
+        inputs:
+        - content: |-
+            set -ex 
+            if [[ "$XCODE_SIMULATOR_UDID" != "D99575AF-303B-458C-8EDD-67921A4F4975" ]]; then
+              exit 1
+            fi
+

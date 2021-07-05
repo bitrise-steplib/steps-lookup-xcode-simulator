@@ -1,0 +1,73 @@
+title: |-
+  Look up Xcode Simulator UDID
+summary: |
+  Looks up a matching Xcode Simulator UDID
+description: |
+  Looks up a matching Xcode Simulator UDID
+website: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid
+source_code_url: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid
+support_url: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid/issues
+
+type_tags:
+  - utility
+
+is_always_run: false
+is_skippable: false
+
+toolkit:
+  go:
+    package_name: github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid
+
+inputs:
+  - simulator_device: iPhone 8 Plus
+    opts:
+      title: "Device"
+      description: |-
+        Set it as it is shown in Xcode's device selection dropdown UI.
+
+        A couple of examples (the
+        actual available options depend on which versions
+        are installed):
+
+        * iPhone 8 Plus
+        * iPhone Xs Max
+        * iPad Air (3rd generation)
+        * iPad Pro (12.9-inch) (3rd generation)
+        * Apple TV 4K (don't forget to set the platform to `tvOS Simulator` to use this option!)
+      is_required: true
+  - simulator_os_version: latest
+    opts:
+      title: "OS version"
+      description: |-
+        Set it as it is shown in
+        Xcode's device selection dropdown UI.
+
+        A couple of format examples (the
+        actual available options depend on which versions
+        are installed):
+
+        * 8.4
+        * latest
+      is_required: true
+  - simulator_platform: iOS Simulator
+    opts:
+      title: Platform
+      description: |-
+        Set it as it is shown in Xcode's device selection dropdown UI.
+
+        A couple of examples (the
+        actual available options depend on which versions
+        are installed):
+
+        * iOS Simulator
+        * tvOS Simulator
+      value_options:
+      - iOS Simulator
+      - tvOS Simulator
+      is_required: true
+
+outputs:
+  - XCODE_SIMULATOR_UDID:
+    opts:
+      title: "Xcode Simulator UDID"
+      summary: UDID of the matching Xcode Simulator
