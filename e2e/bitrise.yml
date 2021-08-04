@@ -14,7 +14,8 @@ workflows:
         inputs:
         - content: |-
             set -ex 
-            if [[ "$XCODE_SIMULATOR_UDID" != "D99575AF-303B-458C-8EDD-67921A4F4975" ]]; then
+            if [[ -z "$XCODE_SIMULATOR_UDID" ]]; then
+              echo "XCODE_SIMULATOR_UDID not exported"
               exit 1
             fi
 
