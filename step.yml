@@ -8,6 +8,14 @@ website: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator
 source_code_url: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid
 support_url: https://github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid/issues
 
+project_type_tags:
+  - ios
+  - react-native
+  - flutter
+  - cordova
+  - ionic
+  - xamarin
+
 type_tags:
   - utility
 
