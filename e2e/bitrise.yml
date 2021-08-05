@@ -18,7 +18,7 @@ workflows:
             elif [[ ${XCODE_MAJOR_VERSION} -eq 11 ]]; then
               envman add --key "SIMULATOR_OS_VERSION" --value "13.6"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 12 ]]; then
-              envman add --key "SIMULATOR_OS_VERSION" --value "14.5"
+              envman add --key "SIMULATOR_OS_VERSION" --value "14.4"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 13 ]]; then
               envman add --key "SIMULATOR_OS_VERSION" --value "15.0"
             fi
