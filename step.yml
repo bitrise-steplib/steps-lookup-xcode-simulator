@@ -28,10 +28,10 @@ toolkit:
 
 inputs:
 - destination:
-    opts:
-      title: Device destination specifier
-      summary: Destination specifier describes the device to use as a destination.
-      is_required: true
+  opts:
+    title: Device destination specifier
+    summary: Destination specifier describes the device to use as a destination.
+    is_required: true
 
 outputs:
 - XCODE_SIMULATOR_UDID:
