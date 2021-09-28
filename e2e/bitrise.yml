@@ -14,19 +14,18 @@ workflows:
             set -e
 
             if [[ ${XCODE_MAJOR_VERSION} -eq 10 ]]; then
-              envman add --key "SIMULATOR_OS_VERSION" --value "12.4"
+              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 8,OS=latest"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 11 ]]; then
-              envman add --key "SIMULATOR_OS_VERSION" --value "13.6"
+              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 8 Plus,OS=latest"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 12 ]]; then
-              envman add --key "SIMULATOR_OS_VERSION" --value "14.4"
+              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 11,OS=latest"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 13 ]]; then
-              envman add --key "SIMULATOR_OS_VERSION" --value "15.0"
+              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 12,OS=latest"
             fi
     - path::./:
         title: Test Step
         inputs:
-        - simulator_device: "iPhone 8"
-        - simulator_os_version: $SIMULATOR_OS_VERSION
+        - destination: $DESTINATION
     - script:
         inputs:
         - content: |-
@@ -38,23 +37,23 @@ workflows:
 
   _expose_xcode_version:
     steps:
-      - script:
-          title: Expose Xcode major version
-          inputs:
-            - content: |-
-                #!/bin/env bash
-                set -e
-                if [[ ! -z "$XCODE_MAJOR_VERSION" ]]; then
-                  echo "Xcode major version already exposed: $XCODE_MAJOR_VERSION"
-                  exit 0
-                fi
-                version=`xcodebuild -version`
-                regex="Xcode ([0-9]*)."
-                if [[ ! $version =~ $regex ]]; then
-                  echo "Failed to determine Xcode major version"
-                  exit 1
-                fi
-                xcode_major_version=${BASH_REMATCH[1]}
-                echo "Xcode major version: $xcode_major_version"
-                envman add --key XCODE_MAJOR_VERSION --value $xcode_major_version
+    - script:
+        title: Expose Xcode major version
+        inputs:
+        - content: |-
+            #!/bin/env bash
+            set -e
+            if [[ ! -z "$XCODE_MAJOR_VERSION" ]]; then
+              echo "Xcode major version already exposed: $XCODE_MAJOR_VERSION"
+              exit 0
+            fi
+            version=`xcodebuild -version`
+            regex="Xcode ([0-9]*)."
+            if [[ ! $version =~ $regex ]]; then
+              echo "Failed to determine Xcode major version"
+              exit 1
+            fi
+            xcode_major_version=${BASH_REMATCH[1]}
+            echo "Xcode major version: $xcode_major_version"
+            envman add --key XCODE_MAJOR_VERSION --value $xcode_major_version
 

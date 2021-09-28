@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid/destination"
 	"os"
 	"strings"
 	"time"
@@ -15,10 +16,7 @@ import (
 
 // Input ...
 type Input struct {
-	// Simulator Configs
-	SimulatorPlatform  string `env:"simulator_platform,required"`
-	SimulatorDevice    string `env:"simulator_device,required"`
-	SimulatorOsVersion string `env:"simulator_os_version,required"`
+	Destination string `env:"destination,required"`
 }
 
 func run() error {
@@ -30,29 +28,39 @@ func run() error {
 	stepconf.Print(input)
 	fmt.Println()
 
-	// validate simulator related inputs
 	var sim simulator.InfoModel
 	var osVersion string
 
-	platform := strings.TrimSuffix(input.SimulatorPlatform, " Simulator")
+	simulatorDestination, err := destination.NewSimulator(input.Destination)
+	if err != nil {
+		return fmt.Errorf("invalid destination specifier: %v", err)
+	}
+
+	platform := strings.TrimSuffix(simulatorDestination.Platform, " Simulator")
 	// Retry gathering device information since xcrun simctl list can fail to show the complete device list
 	if err := retry.Times(3).Wait(10 * time.Second).Try(func(attempt uint) error {
 		var errGetSimulator error
-		if input.SimulatorOsVersion == "latest" {
-			sim, osVersion, errGetSimulator = simulator.GetLatestSimulatorInfoAndVersion(platform, input.SimulatorDevice)
+		if simulatorDestination.OS == "latest" {
+			simulatorDevice := simulatorDestination.Name
+			if simulatorDevice == "iPad" {
+				log.Warnf("Given device (%s) is deprecated, using iPad Air (3rd generation)...", simulatorDevice)
+				simulatorDevice = "iPad Air (3rd generation)"
+			}
+
+			sim, osVersion, errGetSimulator = simulator.GetLatestSimulatorInfoAndVersion(platform, simulatorDevice)
 		} else {
-			normalizedOsVersion := input.SimulatorOsVersion
+			normalizedOsVersion := simulatorDestination.OS
 			osVersionSplit := strings.Split(normalizedOsVersion, ".")
 			if len(osVersionSplit) > 2 {
 				normalizedOsVersion = strings.Join(osVersionSplit[0:2], ".")
 			}
 			osVersion = fmt.Sprintf("%s %s", platform, normalizedOsVersion)
 
-			sim, errGetSimulator = simulator.GetSimulatorInfo(osVersion, input.SimulatorDevice)
+			sim, errGetSimulator = simulator.GetSimulatorInfo(osVersion, simulatorDestination.Name)
 		}
 
 		if errGetSimulator != nil {
-			log.Warnf("attempt %d to get simulator udid failed with error: %s", attempt, errGetSimulator)
+			log.Warnf("attempt %d to get simulator UDID failed with error: %s", attempt, errGetSimulator)
 		}
 
 		return errGetSimulator
