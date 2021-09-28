@@ -25,6 +25,11 @@ func NewSimulator(destination string) (*Simulator, error) {
 
 	for _, part := range destinationParts {
 		keyAndValue := strings.Split(part, "=")
+
+		if len(keyAndValue) != 2 {
+			return nil, fmt.Errorf(`could not parse "%s" because it is not a valid key=value pair in destination: %s`, keyAndValue, destination)
+		}
+
 		key := keyAndValue[0]
 		value := keyAndValue[1]
 
