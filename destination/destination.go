@@ -11,12 +11,14 @@ const (
 	os       = "OS"
 )
 
+// Simulator ...
 type Simulator struct {
 	Platform string
 	Name     string
 	OS       string
 }
 
+// NewSimulator ...
 func NewSimulator(destination string) (*Simulator, error) {
 	simulator := Simulator{}
 	destinationParts := strings.Split(destination, ",")
