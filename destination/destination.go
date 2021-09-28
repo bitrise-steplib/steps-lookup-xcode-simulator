@@ -36,16 +36,16 @@ func NewSimulator(destination string) (*Simulator, error) {
 		case os:
 			simulator.OS = value
 		default:
-			return nil, fmt.Errorf("could not parse key \"%s\" with value \"%s\" in destination: %s", key, value, destination)
+			return nil, fmt.Errorf(`could not parse key "%s" with value "%s" in destination: %s`, key, value, destination)
 		}
 	}
 
 	if simulator.Platform == "" {
-		return nil, fmt.Errorf("missing key \"platform\" in destination: %s", destination)
+		return nil, fmt.Errorf(`missing key "platform" in destination: %s`, destination)
 	}
 
 	if simulator.Name == "" {
-		return nil, fmt.Errorf("missing key \"name\" in destination: %s", destination)
+		return nil, fmt.Errorf(`missing key "name" in destination: %s`, destination)
 	}
 
 	if simulator.OS == "" {
