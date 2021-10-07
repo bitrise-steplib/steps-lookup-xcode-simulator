@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/bitrise-steplib/bitrise-step-look-up-xcode-simulator-udid/destination"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/bitrise-io/go-steputils/stepconf"
 	"github.com/bitrise-io/go-steputils/tools"
+	"github.com/bitrise-io/go-utils/env"
 	"github.com/bitrise-io/go-utils/log"
 	"github.com/bitrise-io/go-utils/retry"
+	"github.com/bitrise-io/go-xcode/destination"
 	"github.com/bitrise-io/go-xcode/simulator"
 )
 
@@ -21,7 +22,8 @@ type Input struct {
 
 func run() error {
 	var input Input
-	if err := stepconf.Parse(&input); err != nil {
+	inputParser := stepconf.NewInputParser(env.NewRepository())
+	if err := inputParser.Parse(&input); err != nil {
 		return fmt.Errorf("issue with input: %s", err)
 	}
 
