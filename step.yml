@@ -36,5 +36,5 @@ inputs:
 outputs:
 - XCODE_SIMULATOR_UDID:
   opts:
-    title: "Xcode Simulator UDID"
+    title: Xcode Simulator UDID
     summary: UDID of the matching Xcode Simulator

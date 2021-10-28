@@ -29,7 +29,7 @@ workflows:
     - script:
         inputs:
         - content: |-
-            set -ex 
+            set -ex
             if [[ -z "$XCODE_SIMULATOR_UDID" ]]; then
               echo "XCODE_SIMULATOR_UDID not exported"
               exit 1
@@ -56,4 +56,3 @@ workflows:
             xcode_major_version=${BASH_REMATCH[1]}
             echo "Xcode major version: $xcode_major_version"
             envman add --key XCODE_MAJOR_VERSION --value $xcode_major_version
-
