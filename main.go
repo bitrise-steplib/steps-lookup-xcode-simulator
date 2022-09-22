@@ -70,7 +70,7 @@ func run() error {
 		return fmt.Errorf("simulator UDID lookup failed: %s", err)
 	}
 
-	log.Infof("Found Simulator (UDID: %s OS version: %s", sim.ID, osVersion)
+	log.Infof("Found Simulator (UDID: %s OS version: %s)", sim.ID, osVersion)
 
 	const simulatorUDIDKey = "XCODE_SIMULATOR_UDID"
 	log.Infof("Exporting %s -> %s", simulatorUDIDKey, sim.ID)

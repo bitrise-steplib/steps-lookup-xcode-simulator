@@ -21,7 +21,7 @@ workflows:
             elif [[ ${XCODE_MAJOR_VERSION} -eq 13 ]]; then
               envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 12,OS=latest"
             elif [[ ${XCODE_MAJOR_VERSION} -eq 14 ]]; then
-              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 13,OS=latest"
+              envman add --key "DESTINATION" --value "platform=iOS Simulator,name=iPhone 14,OS=latest"
             fi
     - path::./:
         title: Test Step
