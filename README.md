@@ -1,3 +1,5 @@
+[Archived] Use https://github.com/bitrise-steplib/bitrise-step-xcode-start-simulator instead.
+
 # Look up Xcode Simulator UDID
 
 Looks up a matching Xcode Simulator UDID
